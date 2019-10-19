@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBAction func touchCard(_ sender: UIButton) {
-        print("")
+        print("agh! a ghost!")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
