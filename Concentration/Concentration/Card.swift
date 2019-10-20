@@ -10,9 +10,15 @@ import Foundation
 
 struct Card {
     // Kart'ın Ön/Arka yüzümü tutan parametre
-    var isFaceUP = false
+    var isFaceUP = false {
+        didSet {
+            if isFaceUP { isSeen = true }
+        }
+    }
     // Kart'ın eşleşip eşleşmediğini tutan parametre
     var isMatched = false
+    // Kartın açıldığını tutan parametre
+    var isSeen = false
     var identifier: Int
     
     //self parametresi kullanmadan struct içinde init yazma.

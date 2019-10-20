@@ -16,6 +16,11 @@ class Concentration {
     var score = 0
     var flipCount = 0
     
+    //Skor işlemleri
+    // Her eşleşme için 2 puan ver.
+    static var matchPoints = 2
+    // Eşleşmeyen kart için -1 puan penaltı cezası ver
+    static var wasFaceUpPenalty = 1
     func chooseCard(at index: Int) {
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
@@ -23,8 +28,15 @@ class Concentration {
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    score += (Concentration.matchPoints)
+                } else {
+                    
+                    //Kart daha önce görüntülendi ise ceza ver. ilk defa görüntülendiğinde ceza puanı yazma.
+                    if cards[index].isSeen {
+                        score -= Concentration.wasFaceUpPenalty
+                    }
                 }
-          cards[index].isFaceUP = true
+                cards[index].isFaceUP = true
                 indexOfOneAndOnlyFaceUpCard = nil
             }else {
                 //either no cards or 2 cards are face up
@@ -44,12 +56,12 @@ class Concentration {
         var unShuffleCards: [Card] = []
         for _ in 1...numberOfPairsOfCards {
             let card = Card()
-//            cards += [card, card]
+            //            cards += [card, card]
             unShuffleCards += [card, card]
         }
         
         //TODO: Shuffle the cards - Kartları karıştır.
-//        cards.shuffle()
+        //        cards.shuffle()
         while !unShuffleCards.isEmpty {
             let randomIndex = unShuffleCards.count.arc4Random
             let card = unShuffleCards.remove(at: randomIndex)
