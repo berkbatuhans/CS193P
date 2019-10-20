@@ -9,6 +9,8 @@
 import Foundation
 
 struct Card {
+    // MARK: - Public types
+    
     // Kart'ın Ön/Arka yüzümü tutan parametre
     var isFaceUP = false {
         didSet {
@@ -19,22 +21,25 @@ struct Card {
     var isMatched = false
     // Kartın açıldığını tutan parametre
     var isSeen = false
-    var identifier: Int
     
-    //self parametresi kullanmadan struct içinde init yazma.
-//    init(identifier i: Int) {
-//        identifier = i
-//    }
+    //MARK: - Semipublic types
     
-//    init(identifier: Int) {
-//        self.identifier = identifier
-//    }
+    private(set) var identifier: Int
+    
+    // MARK: Private types
     static var identifierFactory = 0
-    static func getUniqueIdentifier() -> Int {
-        identifierFactory += 1
-        return identifierFactory
-    }
+    
+    
+    // MARK: - Init
+    
     init() {
         self.identifier = Card.getUniqueIdentifier()
+    }
+    
+    // MARK: - Private methods:
+    
+    private static func getUniqueIdentifier() -> Int {
+        identifierFactory += 1
+        return identifierFactory
     }
 }

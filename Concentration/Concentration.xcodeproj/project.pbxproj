@@ -15,6 +15,9 @@
 		1292289B235B0E9B0035DFFB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12922899235B0E9B0035DFFB /* LaunchScreen.storyboard */; };
 		129228A3235B501A0035DFFB /* Concentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129228A2235B501A0035DFFB /* Concentration.swift */; };
 		129228A5235B51520035DFFB /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129228A4235B51520035DFFB /* Card.swift */; };
+		129228AE235C88310035DFFB /* Int+Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129228AD235C88310035DFFB /* Int+Numbers.swift */; };
+		129228B0235C88B30035DFFB /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129228AF235C88B30035DFFB /* Configuration.swift */; };
+		129228B2235C8A4D0035DFFB /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129228B1235C8A4D0035DFFB /* Themes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		1292289C235B0E9B0035DFFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		129228A2235B501A0035DFFB /* Concentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concentration.swift; sourceTree = "<group>"; };
 		129228A4235B51520035DFFB /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		129228AD235C88310035DFFB /* Int+Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Numbers.swift"; sourceTree = "<group>"; };
+		129228AF235C88B30035DFFB /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		129228B1235C8A4D0035DFFB /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,7 @@
 		1292288D235B0E9A0035DFFB /* Concentration */ = {
 			isa = PBXGroup;
 			children = (
+				129228AC235C880F0035DFFB /* Extensions */,
 				1292288E235B0E9A0035DFFB /* AppDelegate.swift */,
 				12922890235B0E9A0035DFFB /* SceneDelegate.swift */,
 				12922892235B0E9A0035DFFB /* ViewController.swift */,
@@ -69,8 +76,18 @@
 				1292289C235B0E9B0035DFFB /* Info.plist */,
 				129228A2235B501A0035DFFB /* Concentration.swift */,
 				129228A4235B51520035DFFB /* Card.swift */,
+				129228AF235C88B30035DFFB /* Configuration.swift */,
+				129228B1235C8A4D0035DFFB /* Themes.swift */,
 			);
 			path = Concentration;
+			sourceTree = "<group>";
+		};
+		129228AC235C880F0035DFFB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				129228AD235C88310035DFFB /* Int+Numbers.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,7 +163,10 @@
 			files = (
 				12922893235B0E9A0035DFFB /* ViewController.swift in Sources */,
 				129228A3235B501A0035DFFB /* Concentration.swift in Sources */,
+				129228B0235C88B30035DFFB /* Configuration.swift in Sources */,
+				129228AE235C88310035DFFB /* Int+Numbers.swift in Sources */,
 				129228A5235B51520035DFFB /* Card.swift in Sources */,
+				129228B2235C8A4D0035DFFB /* Themes.swift in Sources */,
 				1292288F235B0E9A0035DFFB /* AppDelegate.swift in Sources */,
 				12922891235B0E9A0035DFFB /* SceneDelegate.swift in Sources */,
 			);

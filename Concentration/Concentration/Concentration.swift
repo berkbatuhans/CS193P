@@ -10,76 +10,111 @@ import Foundation
 
 class Concentration {
     
-    var cards = [Card]()
+    //MARK: Public types
+    var score: Int
+    var flips: Int
     
-    var indexOfOneAndOnlyFaceUpCard: Int?
-    var score = 0
-    var flipCount = 0
+    // MARK: - Semipublic types
+    private(set) var cards: [Card]
     
-    //Skor işlemleri
-    // Her eşleşme için 2 puan ver.
-    static var matchPoints = 2
-    // Eşleşmeyen kart için -1 puan penaltı cezası ver
-    static var wasFaceUpPenalty = 1
-    func chooseCard(at index: Int) {
-        if !cards[index].isMatched {
-            if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
-                //check if cards match
-                if cards[matchIndex].identifier == cards[index].identifier {
-                    cards[matchIndex].isMatched = true
-                    cards[index].isMatched = true
-                    score += (Concentration.matchPoints)
-                } else {
-                    
-                    //Kart daha önce görüntülendi ise ceza ver. ilk defa görüntülendiğinde ceza puanı yazma.
-                    if cards[index].isSeen {
-                        score -= Concentration.wasFaceUpPenalty
+    // MARK: - Private types
+    
+    var indexOfOneAndOnlyFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUP {
+                    guard foundIndex == nil else {
+                        return nil
                     }
+                    foundIndex = index
                 }
-                cards[index].isFaceUP = true
-                indexOfOneAndOnlyFaceUpCard = nil
-            }else {
-                //either no cards or 2 cards are face up
-                for flipDownIndex in cards.indices {
-                    cards[flipDownIndex].isFaceUP = false
-                }
-                cards[index].isFaceUP = true
-                indexOfOneAndOnlyFaceUpCard = index
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUP = (index == newValue)
             }
         }
-        flipCount += 1
-        //cards[index].isFaceUP = !cards[index].isFaceUP
-        
     }
     
+    //MARK: - Init
+    
     init(numberOfPairsOfCards: Int) {
-        var unShuffleCards: [Card] = []
+        score = Int.zero
+        flips = Int.zero
+        cards = [Card]()
+        
+        //        var unShuffleCards: [Card] = []
         for _ in 1...numberOfPairsOfCards {
             let card = Card()
-            //            cards += [card, card]
-            unShuffleCards += [card, card]
+            cards += [card, card]
+            //            unShuffleCards += [card, card]
         }
         
         //TODO: Shuffle the cards - Kartları karıştır.
-        //        cards.shuffle()
-        while !unShuffleCards.isEmpty {
-            let randomIndex = unShuffleCards.count.arc4Random
-            let card = unShuffleCards.remove(at: randomIndex)
-            cards.append(card)
+        cards.shuffle()
+        //        while !unShuffleCards.isEmpty {
+        //            let randomIndex = unShuffleCards.count.arc4Random
+        //            let card = unShuffleCards.remove(at: randomIndex)
+        //            cards.append(card)
+        //        }
+    }
+    
+    
+    func chooseCard(at index: Int) {
+        
+        assert(cards.indices.contains(index), "Concentration.chooseCard (at: \(index)): Dizini aralık dışında seçti")
+        
+        if !cards[index].isMatched, !cards[index].isFaceUP {
+            
+            // One card selected
+            if let selectedCardIndex = indexOfOneAndOnlyFaceUpCard, selectedCardIndex != index {
+                //Matching card found
+                matchCards(at: selectedCardIndex, at: index)
+                cards[index].isFaceUP = true
+                //Two or none cards selected
+            } else {
+                indexOfOneAndOnlyFaceUpCard = index
+            }
         }
+        flips += 1
+        
+        
+    }
+    
+    //MARK: - Private methods
+    
+    private func matchCards(at firstIndex: Int, at secondIndex: Int){
+        //check if cards match
+        if cards[firstIndex].identifier == cards[secondIndex].identifier {
+            cards[firstIndex].isMatched = true
+            cards[secondIndex].isMatched = true
+            addReward()
+        } else {
+            
+            //Kart daha önce görüntülendi ise ceza ver. ilk defa görüntülendiğinde ceza puanı yazma.
+            if cards[secondIndex].isSeen {
+                addPenalty()
+                //                score -= Concentration.wasFaceUpPenalty
+            }
+        }
+        
+    }
+    
+    private func addReward(){
+        addScore(of: GameRules.reward)
+    }
+    
+    private func addPenalty() {
+        addScore(of: GameRules.penalty)
+    }
+    
+    private func addScore(of value: Int){
+        score += value
     }
 }
 
 
-extension Int {
-    var arc4Random: Int {
-        switch self {
-        case 1...Int.max:
-            return Int(arc4random_uniform(UInt32(self)))
-        case -Int.max..<0:
-            return Int(arc4random_uniform(UInt32(self)))
-        default:
-            return 0
-        }
-    }
-}
+
