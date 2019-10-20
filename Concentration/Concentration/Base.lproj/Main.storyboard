@@ -231,12 +231,15 @@
                                                 <state key="normal" title="Yeni Oyun">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="onNewGame:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6ft-jB-GDi"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="k8m-Lv-Q7c" firstAttribute="width" secondItem="6jP-A9-SJy" secondAttribute="width" id="4CF-j9-bE1"/>
+                                    <constraint firstItem="k8m-Lv-Q7c" firstAttribute="width" secondItem="wpV-uU-ER1" secondAttribute="width" id="EWe-Vm-Wjq"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -251,6 +254,8 @@
                     </view>
                     <connections>
                         <outlet property="flipCountLabel" destination="lqC-R3-FHI" id="KNa-ki-snr"/>
+                        <outlet property="gameScoreLabel" destination="4h3-YY-Nep" id="xSI-UN-lXD"/>
+                        <outlet property="newGameButton" destination="k8m-Lv-Q7c" id="2d6-Ww-9Sr"/>
                         <outletCollection property="cardButtons" destination="R2h-VL-mRU" collectionClass="NSMutableArray" id="t4X-UL-5a4"/>
                         <outletCollection property="cardButtons" destination="qZH-ia-Iut" collectionClass="NSMutableArray" id="Fhq-QX-0GG"/>
                         <outletCollection property="cardButtons" destination="aAj-gM-Xaw" collectionClass="NSMutableArray" id="VsT-xA-wAh"/>

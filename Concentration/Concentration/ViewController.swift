@@ -10,36 +10,46 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+//    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+    var game: Concentration!
+    @IBOutlet weak var flipCountLabel: UILabel!
+    @IBOutlet weak var gameScoreLabel: UILabel!
+    @IBOutlet var cardButtons: [UIButton]!
     
-    var flipCount = 0 {
-        didSet {
-            flipCountLabel.text = "Çevirmeler: \(flipCount)"
+    @IBOutlet weak var newGameButton: UIButton! {
+        didSet{
+            newGameButton.titleLabel?.numberOfLines = 0
         }
     }
     
-    @IBOutlet weak var flipCountLabel: UILabel!
-    @IBOutlet var cardButtons: [UIButton]!
     
+    @IBAction func onNewGame(_ sender: UIButton, forEvent event: UIEvent) {
+        startNewGame()
+    }
     
+    private func startNewGame(){
+//        theme = newTheme
+        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        flipCountLabel.text = "Flips: \(game.flipCount)"
+        gameScoreLabel.text = "Score: \(game.score)"
+        emoji = [:]
+//        emojiChoices = theme.emoji
+    }
     
     
     @IBAction func touchCard(_ sender: UIButton) {
-        flipCount += 1
-        if let cardNumber = cardButtons.lastIndex(of: sender) {
+        
+        if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
+            flipCountLabel.text = "Çevirmeler: \(game.flipCount)"
+            gameScoreLabel.text = "Puan: \(game.score)"
         } else {
             print("seçilen kart bağlı değildi")
         }
-        
-        
     }
     
     func updateViewFromModel() {
-        //        for (index) in 0..<cardButtons.count {
-        //            <#code#>
-        //        }
         for index in cardButtons.indices {
             let button = cardButtons[index]
             let card = game.cards[index]
@@ -58,9 +68,8 @@ class ViewController: UIViewController {
     func emoji(for card: Card) -> String {
         
         if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-                let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
+                let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count - 1)))
                 emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
-            
         }
         
         //v1
@@ -76,6 +85,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        startNewGame()
         // Do any additional setup after loading the view.
     }
     
