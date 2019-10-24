@@ -34,10 +34,10 @@ class ViewController: UIViewController {
     }
     
     
-    @IBOutlet weak var flipCountLabel: UILabel!
-    @IBOutlet weak var gameScoreLabel: UILabel!
-    @IBOutlet var cardButtons: [UIButton]!
-    @IBOutlet weak var newGameButton: UIButton! {
+    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var gameScoreLabel: UILabel!
+    @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet private weak var newGameButton: UIButton! {
         didSet{
             newGameButton.titleLabel?.numberOfLines = 0
         }
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     
     // MARK: - Private action methods
     
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBAction private func touchCard(_ sender: UIButton) {
         
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
@@ -62,7 +62,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func onNewGame(_ sender: UIButton, forEvent event: UIEvent) {
+    @IBAction private func onNewGame(_ sender: UIButton, forEvent event: UIEvent) {
         startNewGame()
     }
     
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
     }
     
     
-    func emoji(for card: Card) -> String {
+    private func emoji(for card: Card) -> String {
         
         if emoji[card.identifier] == nil, emojiSet.count > 0 {
             let randomIndex = Int.random(in: 0..<emojiSet.count)
@@ -95,7 +95,7 @@ class ViewController: UIViewController {
         //v2 refactoring
         return emoji[card.identifier] ?? "?"
     }
-    func updateViewFromModel() {
+    private func updateViewFromModel() {
         
         var hasCardsNotMathed = false
         

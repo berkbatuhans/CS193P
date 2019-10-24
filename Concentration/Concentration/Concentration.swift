@@ -19,7 +19,7 @@ class Concentration {
     
     // MARK: - Private types
     
-    var indexOfOneAndOnlyFaceUpCard: Int? {
+    private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
             var foundIndex: Int?
             for index in cards.indices {
@@ -42,6 +42,7 @@ class Concentration {
     //MARK: - Init
     
     init(numberOfPairsOfCards: Int) {
+        assert(numberOfPairsOfCards > 0, "Concentration.init(at: \(numberOfPairsOfCards)): you must have at least one pair of cards en az bir çift kartınızın olması gerekir.")
         score = Int.zero
         flips = Int.zero
         cards = [Card]()

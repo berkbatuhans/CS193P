@@ -27,7 +27,7 @@ struct Card {
     private(set) var identifier: Int
     
     // MARK: Private types
-    static var identifierFactory = 0
+    private static var identifierFactory = 0
     
     
     // MARK: - Init
