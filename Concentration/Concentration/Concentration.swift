@@ -19,18 +19,20 @@ struct Concentration {
     
     // MARK: - Private types
     
-    private var indexOfOneAndOnlyFaceUpCard: Int? {
+    private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
-            var foundIndex: Int?
-            for index in cards.indices {
-                if cards[index].isFaceUP {
-                    guard foundIndex == nil else {
-                        return nil
-                    }
-                    foundIndex = index
-                }
-            }
-            return foundIndex
+            let faceUpCardIndices = cards.indices.filter { cards[$0].isFaceUP }
+            return faceUpCardIndices.count == 1 ? faceUpCardIndices.first : nil
+//            var foundIndex: Int?
+//            for index in cards.indices {
+//                if cards[index].isFaceUP {
+//                    guard foundIndex == nil else {
+//                        return nil
+//                    }
+//                    foundIndex = index
+//                }
+//            }
+//            return foundIndex
         }
         set {
             for index in cards.indices {
@@ -71,13 +73,13 @@ struct Concentration {
         if !cards[index].isMatched, !cards[index].isFaceUP {
             
             // One card selected
-            if let selectedCardIndex = indexOfOneAndOnlyFaceUpCard, selectedCardIndex != index {
+            if let selectedCardIndex = indexOfTheOneAndOnlyFaceUpCard, selectedCardIndex != index {
                 //Matching card found
                 matchCards(at: selectedCardIndex, at: index)
                 cards[index].isFaceUP = true
                 //Two or none cards selected
             } else {
-                indexOfOneAndOnlyFaceUpCard = index
+                indexOfTheOneAndOnlyFaceUpCard = index
             }
         }
         flips += 1
@@ -115,6 +117,10 @@ struct Concentration {
     private mutating func addScore(of value: Int){
         score += value
     }
+}
+
+extension Collection {
+    
 }
 
 
