@@ -9,6 +9,7 @@
 import Foundation
 
 struct Card {
+    
     // MARK: - Public types
     
     // Kart'ın Ön/Arka yüzümü tutan parametre
@@ -24,7 +25,7 @@ struct Card {
     
     //MARK: - Semipublic types
     
-    private(set) var identifier: Int
+    private var identifier: Int
     
     // MARK: Private types
     private static var identifierFactory = 0
@@ -41,5 +42,19 @@ struct Card {
     private static func getUniqueIdentifier() -> Int {
         identifierFactory += 1
         return identifierFactory
+    }
+}
+
+extension Card : Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.identifier)
+    }
+
+    var hashValue: Int {
+      return identifier
+    }
+
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+      return lhs.identifier == rhs.identifier
     }
 }

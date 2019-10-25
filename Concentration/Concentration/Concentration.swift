@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Concentration {
+struct Concentration {
     
     //MARK: Public types
     var score: Int
@@ -64,7 +64,7 @@ class Concentration {
     }
     
     
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
         
         assert(cards.indices.contains(index), "Concentration.chooseCard (at: \(index)): Dizini aralık dışında seçti")
         
@@ -87,9 +87,9 @@ class Concentration {
     
     //MARK: - Private methods
     
-    private func matchCards(at firstIndex: Int, at secondIndex: Int){
+    private mutating func matchCards(at firstIndex: Int, at secondIndex: Int){
         //check if cards match
-        if cards[firstIndex].identifier == cards[secondIndex].identifier {
+        if cards[firstIndex] == cards[secondIndex] {
             cards[firstIndex].isMatched = true
             cards[secondIndex].isMatched = true
             addReward()
@@ -104,15 +104,15 @@ class Concentration {
         
     }
     
-    private func addReward(){
+    private mutating func addReward(){
         addScore(of: GameRules.reward)
     }
     
-    private func addPenalty() {
+    private mutating func addPenalty() {
         addScore(of: GameRules.penalty)
     }
     
-    private func addScore(of value: Int){
+    private mutating func addScore(of value: Int){
         score += value
     }
 }

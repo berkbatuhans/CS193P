@@ -28,13 +28,17 @@ class ViewController: UIViewController {
     }
     
     private lazy var emojiSet: [String] = theme.emojiSet
-    private lazy var emoji =  [Int:String]()
+    private lazy var emoji =  [Card:String]()
     private var numberOfPairsOfCards: Int {
         return (cardButtons.count + 1) / 2
     }
     
     
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel! {
+        didSet {
+            updateFlipCountLabel()
+        }
+    }
     @IBOutlet private weak var gameScoreLabel: UILabel!
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var newGameButton: UIButton! {
@@ -55,6 +59,7 @@ class ViewController: UIViewController {
     @IBAction private func touchCard(_ sender: UIButton) {
         
         if let cardNumber = cardButtons.firstIndex(of: sender) {
+            sender.isEnabled = false
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
         } else {
@@ -80,9 +85,10 @@ class ViewController: UIViewController {
     
     private func emoji(for card: Card) -> String {
         
-        if emoji[card.identifier] == nil, emojiSet.count > 0 {
-            let randomIndex = Int.random(in: 0..<emojiSet.count)
-            emoji[card.identifier] = emojiSet.remove(at: randomIndex)
+        if emoji[card] == nil, emojiSet.count > 0 {
+//            let randomIndex = Int.random(in: 0..<emojiSet.count)
+//            emoji[card] = emojiSet.remove(at: randomIndex)
+            emoji[card] = emojiSet.remove(at: emojiSet.count.arc4Random)
         }
         
         //v1
@@ -93,7 +99,7 @@ class ViewController: UIViewController {
         //        }
         
         //v2 refactoring
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
     private func updateViewFromModel() {
         
@@ -103,9 +109,11 @@ class ViewController: UIViewController {
             let button = cardButtons[index]
             let card = game.cards[index]
             if card.isFaceUP {
+                button.isEnabled = false
                 button.setTitle(emoji(for: card), for: .normal)
                 button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             }else{
+                button.isEnabled = true
                 button.setTitle("", for: .normal)
                 button.backgroundColor = card.isMatched ? theme.backgroundColor : theme.cardColor
             }
@@ -114,12 +122,23 @@ class ViewController: UIViewController {
                 hasCardsNotMathed = true
             }
         }
-        flipCountLabel.text = "Çevirme: \(game.flips)"
+        
+        
+        updateFlipCountLabel()
         gameScoreLabel.text = "Puan: \(game.score)"
         
         if !hasCardsNotMathed {
             launchEndGameAlert()
         }
+    }
+    
+    private func updateFlipCountLabel(){
+        let attributes: [NSAttributedString.Key:Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: #colorLiteral(red: 0.9768255353, green: 0.5174402595, blue: 0.08832768351, alpha: 1)
+        ]
+        let attributedString = NSAttributedString(string: "Çevirme: \(game.flips)", attributes: attributes)
+        flipCountLabel.attributedText = attributedString
     }
     
     private func launchEndGameAlert() {
